@@ -3,25 +3,31 @@ class Calculator:
         return a + b
 
     def subtract(self, a, b):
-        return b - a
+        return a - b
 
     def multiply(self, a, b):
         result = 0
-        for i in range(b+1):
+        for i in range(abs(b)):
             result = self.add(result, a)
-        return result
+        return result if b>= 0 else -result
 
     def divide(self, a, b):
-        result = 0
-        while a > b:
-            a = self.subtract(a, b)
+        if b == 0:
+            raise ValueError("Cannot calculate modulo by zero")
+        abs_a, abs_b = abs(a), abs(b)
+        result=0
+        while abs_a >= abs_b:  
+            abs_a = self.subtract(abs_a, abs_b)
             result += 1
-        return result
+        return result if (a > 0) == (b > 0) else -result
     
     def modulo(self, a, b):
-        while a <= b:
-            a = a-b
-        return a
+        if b == 0:
+            raise ValueError("Cannot calculate modulo by zero")
+        abs_a, abs_b = abs(a), abs(b)
+        while abs_a >= abs_b:  
+            abs_a = self.subtract(abs_a, abs_b)
+        return abs_a   
 
 # Example usage:
 if __name__ == "__main__":
